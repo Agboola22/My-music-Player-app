@@ -1,20 +1,19 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import PlayPuase from "./PlayPause";
+import PlayPause from "./PlayPause";
 import { setActiveSong, playPause } from "../redux/features/playerSlice";
 
 const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
   const dispatch = useDispatch();
   const artists = song.attributes?.artistName?.split(", ") || [];
+
   const handlePauseClick = () => {
     dispatch(playPause(false));
   };
+
   const handlePlayClick = () => {
-   console.log("Before dispatch - activeSong:", activeSong);
-  console.log("Dispatching song:", song);
-  dispatch(setActiveSong({ song, data, i }));
-  dispatch(playPause(true));
-  console.log("After dispatch");
+    dispatch(setActiveSong({ song, data, i }));
+    dispatch(playPause(true));
   };
   // console.log(activeSong);
 
@@ -22,13 +21,14 @@ const SongCard = ({ song, i, isPlaying, activeSong, data }) => {
     <div className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer">
       <div className="relative w-full h-56 group">
         <div
+          onClick={() => console.log(song)}
           className={`absolute inset-0 justify-center items-center bg-black opacity-50 group-hover:flex ${
             activeSong?.attributes?.name === song.attributes?.name
               ? "flex bg-black opacity-50"
               : "hidden"
           }`}
         >
-          <PlayPuase
+          <PlayPause
             song={song}
             handlePause={handlePauseClick}
             handlePlay={handlePlayClick}

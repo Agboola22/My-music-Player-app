@@ -4,10 +4,10 @@ import { genres } from "../assets/constants";
 import { useGetTopChartsQuery } from "../redux/services/shazamCore";
 
 const Discover = () => {
-  const { data, isFetching, error } = useGetTopChartsQuery();
+  const { data, isFetching, error } = useGetTopChartsQuery(); // fetch songs from API endpoint
+  const {activeSong, isPlaying} = useSelector((state) => state.player); // gets state from redux
   const genreTitle = "Pop";
   const dispatch = useDispatch();
-  const {activeSong, isPlaying} = useSelector((state) => state.player);
 
   if (isFetching) return <Loader title="Loading songs..." />;
   if (error) return <Error />;

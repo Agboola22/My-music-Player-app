@@ -12,9 +12,6 @@ const Player = ({
 }) => {
 
   const ref = useRef(null);
-  console.log("Player rendering - activeSong:", activeSong);
-  console.log("Player rendering - audio src:", activeSong?.attributes?.previews?.[0]?.url);
-  console.log("Player rendering - isPlaying:", isPlaying);
   
 
   useEffect(() => {
