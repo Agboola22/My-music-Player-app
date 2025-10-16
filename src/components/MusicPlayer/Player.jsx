@@ -1,28 +1,47 @@
-/* eslint-disable jsx-a11y/media-has-caption */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 
-const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate, onLoadedData, repeat }) => {
+const Player = ({
+  activeSong,
+  isPlaying,
+  volume,
+  seekTime,
+  onEnded,
+  onTimeUpdate,
+  onLoadedData,
+  repeat,
+}) => {
+
   const ref = useRef(null);
-  // eslint-disable-next-line no-unused-expressions
-  if (ref.current) {
+  console.log("Player rendering - activeSong:", activeSong);
+  console.log("Player rendering - audio src:", activeSong?.attributes?.previews?.[0]?.url);
+  console.log("Player rendering - isPlaying:", isPlaying);
+  
+
+  useEffect(() => {
+    if (!ref.current) return;
+
     if (isPlaying) {
       ref.current.play();
     } else {
       ref.current.pause();
     }
-  }
+  }, [isPlaying]);
 
   useEffect(() => {
-    ref.current.volume = volume;
+    if (ref.current) {
+      ref.current.volume = volume;
+    }
   }, [volume]);
-  // updates audio element only on seekTime change (and not on each rerender):
+
   useEffect(() => {
-    ref.current.currentTime = seekTime;
+    if (ref.current) {
+      ref.current.currentTime = seekTime;
+    }
   }, [seekTime]);
 
   return (
     <audio
-      src={activeSong?.hub?.actions[1]?.uri}
+      src={activeSong?.attributes?.previews?.[0]?.url}
       ref={ref}
       loop={repeat}
       onEnded={onEnded}
